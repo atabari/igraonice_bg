@@ -25,6 +25,7 @@ public class Cakes extends Controller {
     /* --------------- create cake render ---------------*/
 
     public Result createCakeRender(Integer storeId) {
+        Integer userId = UserAccessLevel.getCurrentUser(ctx()).id;
         return ok(views.html.cake.createCake.render(storeId, userId));
     }
 
