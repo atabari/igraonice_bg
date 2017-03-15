@@ -1,0 +1,53 @@
+@(items: java.util.List[Item])
+@main{
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Proizvodi iz odabrane kategorije</h2>
+                    </div>
+                </div>
+            </div><!-- //ROW Our Team Header -->
+            <div class="clearfix" style="margin-bottom: 5px"> </div>
+            <div class="cbx-latest-area">
+            @if(items.size() > 0) {
+                @for(item <- items) {
+                    <div class="item active cbx-single-all">
+                        <div class="col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src='@Item.getFirstItemImage(item.id).getSize(276,253)' class="" alt="a" style="height: 253px">
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <a href="@routes.Items.item(item.id)" target="">
+                                            <div class=" col-md-12 text-center">
+                                                <h4 class="product-title-color"><strong>@item.name</strong></h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="">
+                                            Cijena:  @item.price KM</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--//Item-->
+                }
+            }else{
+	            <div class="row margin-bottom-135">
+		            <div class="col-md-12 ">
+			            <div class="cbx-heading text-center ">
+				            <h3 class="uppercase wow fadeInUp">Trenutno nema proizvoda u ovoj kategoriji.</h3>
+			            </div>
+		            </div>
+	            </div>
+            }
+            </div><!-- cbx-latest-area -->
+        </div><!-- container end -->
+    </section>
+
+}

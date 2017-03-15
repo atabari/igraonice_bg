@@ -1,0 +1,90 @@
+@import helpers.ItemCategories
+@(storeId: Integer)
+@main{
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="cbx-heading2 text-center">
+                        <h2 class="uppercase wow fadeInUp">DODAJ NOVI PROIZVOD</h2>
+                        <hr noshade size="" width="" color="">
+                        <p class=" wow flipInY">Molimo unesite sve informacije kako bi proizvod bio uspješno unesen u bazu</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- //ROW Our Team Header -->
+
+            <div class="row">
+                @if(flash.containsKey("error")) {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Message:</span>
+                        @flash.get("error")
+                    </div>
+                }
+                <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action=""  enctype="multipart/form-data">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="text" name="name" class="form-control cbxname lz-git-form-control placeholder-style" id="apname" placeholder="Naziv Proizvoda" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="number" min="1" name="price" class="form-control cbxname lz-git-form-control placeholder-style" id="apprice" placeholder="Cijena" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="text" name="size" class="form-control cbxname lz-git-form-control placeholder-style" id="size" placeholder="Veličina" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <select name="itemCategory"  class="form-control cbxname lz-git-form-control placeholder-style" id="ddlocation">
+                                    <option selected class="placeholder-style"> Odaberi kategoriju</option>
+                                    <option value="@ItemCategories.DJECACI">Djecaci</option>
+                                    <option value="@ItemCategories.DJEVOJCICE">Djevojčice</option>
+                                    <option value="@ItemCategories.OSTALO">Ostalo</option>
+
+                                </select>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <textarea name="description" id="textarea_2" class="form-control cbxmessage lz-git-form-control placeholder-style" name="cbxmessage" id="cbxmessage" rows="10" placeholder="Opis proizvoda" required></textarea>
+                                <label id="cbxmessage-error" class="error valid" for="cbxmessage"></label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div col-md-6>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="image">Dodaj sliku <em class="required">*</em></label>
+                                <input id="height" type="file" name="image" class="form-control" multiple accept="image/*" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                        <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Dodaj</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+
+}
+

@@ -1,0 +1,92 @@
+@(stores: java.util.List[Store])(user: AppUser)
+@main{
+    <section class="margin-bottom-135">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Vaše trenutne prodavnice</h2>
+                    </div>
+                </div>
+            </div>
+                <!-- //ROW Our Team Header -->
+            <div class="cbx-latest-area">
+            @if(stores.size() > 0) {
+                <section id="tablemargins" class="col-md-12">
+                    <table class="table table-responsive" id="sort">
+                        <thead>
+                            <tr class="about">
+                                <th>Naziv</th>
+                                <th>Lokacija</th>
+                                <th>Adresa</th>
+                                <th class="text-center">Proizvodi</th>
+                                <th class="text-center">Rezervacije</th>
+                                <th class="text-center">Uredi</th>
+                                <th class="text-center">Obriši</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(store <- stores) {
+                            <tr class="about" >
+                                <td>@store.name</td>
+                                <td>@store.location</td>
+                                <td>@store.address</td>
+                                @if(user.userAccessLevel == 3) {
+                                    <td class="text-center">
+                                        <a data-role="get" data-delete-parent="tr" href="@routes.Items.listOfStoreItems(store.id)" role="button">
+                                            <i class=" fa fa-list fa-lg"></i></a>
+                                    </td>
+                                }
+                                @if(user.userAccessLevel == 4){
+                                    <td class="text-center">
+                                        <a data-role="get" data-delete-parent="tr" href="@routes.Cakes.listOfStoreCakes(store.id)" role="button">
+                                            <i class=" fa fa-list fa-lg"></i></a>
+                                    </td>
+                                }
+                                <td class="text-center">
+                                    <a data-role="get" data-delete-parent="tr" href="@routes.ItemReservations.storeReservationsRender(store.id)" role="button">
+                                        <i class=" fa fa-check-square fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Stores.updateStoreRender(store.id)" role="button">
+                                        <i class=" fa fa-pencil fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Stores.deleteStore(store.id)" role="button">
+                                        <i class=" fa fa-trash fa-lg"></i></a>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </section>
+
+            }else{
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cbx-heading text-center">
+                            <h3 class="uppercase wow fadeInUp">Trenutno nemate kreiranih prodavnica</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div><!-- cbx-latest-area -->
+
+            <form method="GET" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Stores.createStoreRender(user.id)" >
+                <div class="col-md-12">
+                    <div class="col-md-4 col-md-offset-4 xs-text-center cbx-submit-area" id="">
+                        <button type="submit"  class="btn btn-block lz-git-submit-btn cbx-submit" id="addApartment">DODAJ PRODAVNICU</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- container end -->
+    </section>
+
+
+
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+
+}

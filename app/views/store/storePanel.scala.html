@@ -1,0 +1,63 @@
+@(user: AppUser)
+@main{
+    <div class="container margin-bottom-180">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="cbx-heading2 text-center">
+                    <h2>KORISNIČKI PANEL</h2>
+                </div>
+                <div>
+                    @if(flash.containsKey("success")) {
+                        <div class="alert alert-success" role="alert">
+                            <i class="fa fa-check-square-o" style="font-size:30px"></i>
+                            <span  aria-hidden="true" class="flash-font">@flash.get("success")</span>
+
+                        </div>
+                    }
+                    @if(flash.containsKey("error")) {
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            @flash.get("error")
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+            <div class="col-md-6 login">
+                <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Login.updateUser(user.email)" >
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-1">
+                            <input type="text" name="email" class="form-control cbxname lz-git-form-control placeholder-style" id="loginusername" value="@user.email" readonly>
+                            <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-1">
+                            <input type="password" name="password" class="form-control cbxname lz-git-form-control placeholder-style" id="loginpassword" placeholder="Unesite novi password" required>
+                            <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8 col-md-offset-1 xs-text-center cbx-submit-area" >
+                        <button type="submit"  class="btn btn-block lz-git-submit-btn cbx-submit" id="loginbutton">Ažuriraj</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 login">
+                <form method="GET" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Stores.listOfUserStores(user.id)" >
+
+                    <div class="col-sm-8 col-md-offset-1 xs-text-center cbx-submit-area" >
+                        <button type="submit" class="btn btn-block lz-git-submit-btn cbx-submit" id="loginbutton">Prodavnice</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+}

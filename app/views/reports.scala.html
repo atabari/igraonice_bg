@@ -1,0 +1,80 @@
+@(reservations: java.util.List[Reservation])(userId: Integer)
+@main {
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Igraonice" href="@routes.AppUsers.userApartmentsRender(userId)">Igraonice</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Rezervacije</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section class="margin-bottom-135">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Rezervacije</h2>
+                    </div>
+                </div>
+            </div>
+
+            <section id="tablemargins2" class="col-md-12">
+                <table class="table table-responsive" id="sort">
+                    <thead>
+                        <tr class="about">
+                            <th>Ime</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                            <th class="text-center">Naziv paketa</th>
+                            <th class="text-center">Datum</th>
+                            <th class="text-center">Vrijeme</th>
+                            <th class="text-center">Potvrdi</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(reservation <- reservations) {
+                        <tr class="about" >
+                            <td>@reservation.visitorName @reservation.visitorLastname</td>
+                            <td>@reservation.visitorEmail</td>
+                            <td>@reservation.phone</td>
+                            <td class="text-center">@reservation.paket.name</td>
+                            <td class="text-center">@reservation.dateFrom</td>
+                            <td class="text-center">@reservation.timeFrom:00h - @reservation.timeTo:00h</td>
+                            <td class="text-center">
+                            @if(reservation.confirmed == null || reservation.confirmed == false) {
+                                <a href="@routes.Reservations.confirmReservation(reservation.id)" >
+                                    <button type="submit" class="btn btn-primary" id="middlebuttons">DA</button>
+                                </a>
+                            } else {
+                                <a href="@routes.Reservations.confirmReservation(reservation.id)" >
+                                    <button type="submit" class="btn btn-primary" id="middlebuttons">NE</button>
+
+                                </a>
+                            }
+                            </td>
+
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </section>
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+    <script>
+        $(document).ready(function(){
+             $('.dataTables_filter input').datepicker({
+                todayBtn: "linked",
+                forceParse: false,
+                calendarWeeks: true,
+                todayHighlight: true,
+            });
+        });
+    </script>
+
+}

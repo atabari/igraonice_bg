@@ -1,0 +1,116 @@
+@(cake: Cake)
+
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content ">
+			<form method="POST" action="@routes.Emails.sendMailCake(cake.id)">
+				<div class="modal-header">
+					<button type="button" style="font-size: 30px;" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h2 class="modal-title" id="myModalLabel" style="text-align: center;"> REZERVIŠITE TORTU</h2>
+				</div>
+				<div class="row">
+
+					<div class="modal-body" id="">
+
+						<div class="col-md-5">
+							<div class="product-view">
+								<div class="product-essential">
+									<div class="product-img-box">
+										<div class="product-image">
+											@if(cake.images.size() > 0) {
+												<div class="large-image">
+													<img src='@cake.images.get(0).getSize(300, 300)' alt="">
+												</div>
+												<div class="flexslider flexslider-thumb">
+													<ul class="previews-list slides">
+													@for(image <- cake.images) {
+														<li><a href='@image.getSize(300, 300)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@image.getSize(300, 300)' "><img src='@image.getSize(75, 90)' alt = "Thumbnail 1"/></a></li>
+													}
+													</ul>
+												</div>
+											}else{
+												<div class="large-image">
+													<img src='@routes.Assets.versioned("images/product.png")' alt="">
+												</div>
+											}
+										</div>
+											<!-- end: more-images -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-md-offset-1">
+							<div>
+								<p>Naziv torte: @cake.name</p>
+							</div>
+							<div>
+								<p>Sastojci: @cake.ingredients</p>
+							</div>
+							<div>
+								<p>Cijena: @cake.price KM</p>
+							</div>
+							<div>
+								<p>Opis: @cake.description</p>
+							</div>
+							<div class="margin-top25">
+								<div id="datepicker">
+									<div class="col-md-12 padding-left-0">
+										<div id="sandbox">
+											<p>Datum rezervacije: <input type="text" class="date-check2" name="checkIndate"  id="checkIn" required/> </p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<p>Ime i prezime: <input type="text" name="name"  class="date-check2" id="name"  required></p>
+
+								</div>
+								<div class="col-md-12">
+									<p>Email: <input type="text" name="mail" class="date-check2" id="email"  required></p>
+
+								</div>
+								<div class="col-md-12">
+									<p>Telefon: <input type="text" name="phone" class="date-check2" id="phone" required></p>
+
+								</div>
+								<div class="col-md-12">
+									<textarea name="comment" id="comment-popup" class="text-area" rows="5" style="resize: vertical" placeholder="Ostavite dodatni komentar"></textarea>
+
+								</div>
+							</div>
+
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" style="width:140px; font-size: 18px;" class="btn btn-default" data-dismiss="modal">Odustani</button>
+					<button type="POST" style="width:140px; font-size: 18px;" class="btn btn-primary" href="">Potvrdi</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+		<script>
+
+
+        $('#sandbox input').datepicker({
+            startDate: new Date(),
+            todayBtn: "linked",
+            forceParse: false,
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+
+        });
+
+        function clearData() {
+            $('#basicModal').on('hidden.bs.modal', function () {
+                $(this).find('form').trigger('reset');
+             });
+        }
+
+    </script>
+<link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/flexslider.css")'>
+<link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/etalage.css")'>

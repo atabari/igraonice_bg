@@ -1,0 +1,37 @@
+@(apartmentId: Integer)(userId: Integer)
+@main {
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Igraonice" href="@routes.AppUsers.userApartmentsRender(userId)">Igraonice</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Uredi Igraonicu" href="@routes.Apartments.updateApartment(apartmentId)">Uredi Igraonicu</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Dodaj slike</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+        <div class="row">
+            <div style="margin-top: 20%; margin-bottom: 20%">
+                <form method="POST" role="form" action="@routes.Images.imagesUpload(apartmentId)" enctype="multipart/form-data"  >
+
+                    <div col-md-6>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <input id="height" type="file" name="image" class="form-control" multiple accept="image/*"/>
+                            </div>
+                            <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                                <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Dodaj sliku</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+}

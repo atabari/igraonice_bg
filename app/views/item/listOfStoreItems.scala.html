@@ -1,0 +1,98 @@
+@(items: java.util.List[Item])(storeId: Integer)
+@main{
+    <section class="margin-bottom-135">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Vaši trenutni proizvodi</h2>
+                    </div>
+                </div>
+            </div>
+                <!-- //ROW Our Team Header -->
+            <div class="cbx-latest-area">
+            @if(items.size() > 0) {
+                <section id="tablemargins" class="col-md-12">
+                    <table class="table table-responsive" id="sort">
+                        <thead>
+                            <tr class="about">
+                                <th>Naziv</th>
+                                <th>Cijena</th>
+                                <th>Opis</th>
+                                <th class="text-center">Veličina</th>
+                                <th class="text-center">Kategorija</th>
+                                <th class="text-center">Slike</th>
+                                <th class="text-center">Uredi</th>
+                                <th class="text-center">Pogledaj</th>
+                                <th class="text-center">Obriši</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(item <- items) {
+                            <tr class="about" >
+                                <td>@item.name</td>
+                                <td>@item.price</td>
+                                <td>@item.description</td>
+                                <td class="text-center">@item.size</td>
+                                @if(item.category == 1) {
+                                    <td class="text-center">Dječaci</td>
+                                }
+                                @if(item.category == 2) {
+                                    <td class="text-center">Djevojčice</td>
+
+                                }
+                                @if(item.category == 3) {
+                                    <td class="text-center">Ostalo</td>
+
+                                }
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Items.listOfItemImages(item.id)" role="button">
+                                        <i class=" fa fa-image fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Items.updateItem(item.id)" role="button">
+                                        <i class=" fa fa-pencil fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Items.item(item.id)" role="button">
+                                        <i class=" fa fa-eye fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Items.deleteItem(item.id)" role="button">
+                                        <i class=" fa fa-trash fa-lg"></i></a>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </section>
+
+            }else{
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cbx-heading text-center">
+                            <h3 class="uppercase wow fadeInUp">Trenutno nemate kreiranih proizvoda</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div><!-- cbx-latest-area -->
+
+            <form method="GET" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Items.createItem(storeId)" >
+                <div class="col-md-12">
+                    <div class="col-md-4 col-md-offset-4 xs-text-center cbx-submit-area" id="">
+                        <button type="submit"  class="btn btn-block lz-git-submit-btn cbx-submit" id="addApartment">DODAJ PROIZVOD</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- container end -->
+    </section>
+
+
+
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+
+}

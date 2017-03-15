@@ -1,0 +1,92 @@
+@import helpers.ItemCategories
+@(cake: Cake)(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Slastičarne" href="@routes.Pastries.listOfUserPastries(userId)">Slastičarne</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Slastičarne" href="@routes.Cakes.listOfStoreCakes(cake.pastry.id)">Lista torti</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Ažuriranje torte</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="cbx-heading2 text-center">
+                        <h2 class="uppercase wow fadeInUp">AŽURIRANJE TORTE</h2>
+                        <hr noshade size="" width="" color="">
+                        <p class=" wow flipInY">Molimo unesite sve informacije kako bi torta bila uspješno ažurirana</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- //ROW Our Team Header -->
+
+            <div class="row">
+                @if(flash.containsKey("error")) {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Message:</span>
+                        @flash.get("error")
+                    </div>
+                }
+                <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="" >
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Naziv torte</h4>
+                                <input type="text" name="name" class="form-control cbxname lz-git-form-control placeholder-style" id="apname" value="@cake.name" required>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Cijena</h4>
+                                <input type="number" min="1" name="price" class="form-control cbxname lz-git-form-control placeholder-style" id="apprice" value="@cake.price" required>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Sastojci</h4>
+                                <input type="text" name="ingredients" class="form-control cbxname lz-git-form-control placeholder-style" id="size" value="@cake.ingredients" required>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Za koliko osoba</h4>
+                                <input type="number" min="1" name="numberOfPersons" class="form-control cbxname lz-git-form-control placeholder-style" id="apprice" value="@cake.numberOfPersons" required>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Opis proizvoda</h4>
+                                <textarea name="description" id="textarea_2" class="form-control cbxmessage lz-git-form-control placeholder-style" name="cbxmessage" id="cbxmessage" rows="10"  required>@cake.description</textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                        <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">AŽURIRAJ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+
+}
+

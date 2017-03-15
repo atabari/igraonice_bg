@@ -1,0 +1,96 @@
+@(cakes: java.util.List[Cake])(storeId: Integer)(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Slastičarne" href="@routes.Pastries.listOfUserPastries(userId)">Slastičarne</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Lista torti</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section class="margin-bottom-135">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Vaše trenutne torte</h2>
+                    </div>
+                </div>
+            </div>
+                <!-- //ROW Our Team Header -->
+            <div class="cbx-latest-area">
+            @if(cakes.size() > 0) {
+                <section id="tablemargins" class="col-md-12">
+                    <table class="table table-responsive" id="sort">
+                        <thead>
+                            <tr class="about">
+                                <th>Naziv</th>
+                                <th>Sastav</th>
+                                <th>Cijena</th>
+                                <th class="text-center">Opis</th>
+                                <th class="text-center">Broj osoba</th>
+                                <th class="text-center">Slike</th>
+                                <th class="text-center">Uredi</th>
+                                <th class="text-center">Obriši</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(cake <- cakes) {
+                            <tr class="about" >
+                                <td>@cake.name</td>
+                                <td>@cake.ingredients</td>
+                                <td>@cake.price</td>
+                                <td class="text-center">@cake.description</td>
+                                <td class="text-center">@cake.numberOfPersons</td>
+
+                                <td class="text-center">
+                                    <a data-role="GET" data-delete-parent="tr" href="@routes.Cakes.listOfCakeImages(cake.id)" role="button">
+                                        <i class=" fa fa-image fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Cakes.updateCake(cake.id)" role="button">
+                                        <i class=" fa fa-pencil fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Cakes.deleteCake(cake.id)" role="button">
+                                        <i class=" fa fa-trash fa-lg"></i></a>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </section>
+
+            }else{
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cbx-heading text-center">
+                            <h3 class="uppercase wow fadeInUp">Trenutno nemate kreiranih torti</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div><!-- cbx-latest-area -->
+
+            <form method="GET" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Cakes.createCakeRender(storeId)" >
+                <div class="col-md-12">
+                    <div class="col-md-4 col-md-offset-4 xs-text-center cbx-submit-area" id="">
+                        <button type="submit"  class="btn btn-block lz-git-submit-btn cbx-submit" id="addApartment">DODAJ TORTU</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- container end -->
+    </section>
+
+
+
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+
+}

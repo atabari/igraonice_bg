@@ -1,0 +1,64 @@
+@(paket: Paket)(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Igraonice" href="@routes.AppUsers.userApartmentsRender(userId)">Igraonice</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Paketi" href="@routes.Paketi.listOfPackages(paket.apartment.id)">Paketi</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Uredi Paket</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="cbx-heading2 text-center">
+                    <h2 class="uppercase wow fadeInUp">AŽURIRAJ PAKET</h2>
+                    <hr noshade size="" width="" color="">
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Paketi.updatePackage(paket.id)" >
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <h4 class="edit-label">Naziv paketa</h4>
+                        <input type="text" name="name" class="form-control cbxname lz-git-form-control placeholder-style" id="packageName" value="@paket.name" required>
+                        <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <h4 class="edit-label">Cijena</h4>
+                        <input type="number" name="cost" class="form-control cbxname lz-git-form-control placeholder-style" id="packageCost" value="@paket.cost" min="1" required>
+                        <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <h4 class="edit-label">Opis paketa</h4>
+                        <textarea class="text-area placeholder-style" name="description" rows="10" style="resize: vertical" id="packageDescription" placeholder="Opis Paketa" maxlength="255" required>@paket.description</textarea>
+                        <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <h4 class="edit-label">Trajanje (sati) </h4>
+                        <input type="number" name="duration" class="form-control cbxname lz-git-form-control placeholder-style" id="packageDuration" value="@paket.duration" min="1" max="20" required>
+                        <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">AŽURIRAJ</button>
+            </div>
+        </form>
+    </div>
+
+}

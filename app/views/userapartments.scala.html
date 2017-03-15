@@ -1,0 +1,102 @@
+@(apartments: java.util.List[Apartment])(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Igraonice</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section class="margin-bottom-135">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Vaše trenutne igraonice</h2>
+                    </div>
+                </div>
+            </div>
+           <!-- //ROW Our Team Header -->
+            <div class="cbx-latest-area">
+            @if(apartments.size() > 0) {
+                <section id="tablemargins" class="col-md-12">
+                    <table class="table table-responsive" id="sort">
+                        <thead>
+                            <tr class="about">
+                                <th>Naziv</th>
+                                <th>Lokacija</th>
+                                <th>Adresa</th>
+                                <th class="text-center">Cijena</th>
+                                <th class="text-center">Kapacitet</th>
+                                <th class="text-center">Galerija</th>
+                                <th class="text-center">Paketi</th>
+                                <th class="text-center">Uredi</th>
+                                <th class="text-center">Pogledaj</th>
+                                <th class="text-center">Izvještaj</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(apartment <- apartments) {
+                            <tr class="about" >
+                                <td>@apartment.name</td>
+                                <td>@apartment.location</td>
+                                <td>@apartment.address</td>
+                                <td class="text-center">@apartment.price</td>
+                                <td class="text-center">@apartment.capacity</td>
+                                <td class="text-center">
+                                    <a data-role="get" data-delete-parent="tr" href="@routes.Images.listOfPicturesRender(apartment.id)" role="button">
+                                        <i class=" fa fa-file-image-o fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="get" data-delete-parent="tr" href="@routes.Paketi.listOfPackages(apartment.id)" role="button">
+                                        <i class=" fa fa-list fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Apartments.renderUpdateApartment(apartment.id)" role="button">
+                                        <i class=" fa fa-pencil fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Apartments.apartment(apartment.id)" role="button">
+                                        <i class=" fa fa-eye fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Reservations.allReservations(apartment.id)" role="button">
+                                        <i class=" fa fa-book fa-lg"></i></a>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </section>
+
+            }else{
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cbx-heading text-center">
+                            <h3 class="uppercase wow fadeInUp">Trenutno nemate kreiranih igraonica</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div><!-- cbx-latest-area -->
+
+            <form method="GET" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Apartments.renderApartment(userId)" >
+                <div class="col-md-12">
+                    <div class="col-md-4 col-md-offset-4 xs-text-center cbx-submit-area" id="">
+                        <button type="submit"  class="btn btn-block lz-git-submit-btn cbx-submit" id="addApartment">DODAJ OBJEKAT</button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- container end -->
+    </section>
+
+
+
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+
+}

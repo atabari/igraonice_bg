@@ -1,0 +1,201 @@
+@(paketi: java.util.List[Paket])(apartmentId: Integer)(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Igraonice" href="@routes.AppUsers.userApartmentsRender(userId)">Igraonice</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Paketi</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section class="margin-bottom-135">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Vaši trenutni paketi</h2>
+                    </div>
+                </div>
+            </div>
+                <!-- //ROW Our Team Header -->
+            <div class="clearfix" style="margin-bottom: 5px"> </div>
+            <div class="cbx-latest-area">
+            @if(paketi.size() > 0) {
+                <section id="tablemargins" class="col-md-12">
+                    <table class="table table-responsive" id="sort">
+                        <thead>
+                            <tr class="about">
+                                <th class="text-center">Naziv</th>
+                                <th class="text-center">Cijena</th>
+                                <th class="text-center">Opis</th>
+                                <th class="text-center">Trajanje</th>
+                                <th class="text-center">Rezerviši</th>
+                                <th class="text-center">Uredi</th>
+                                <th class="text-center">Obriši</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(package1 <- paketi) {
+                            <tr class="about" >
+                                <td class="text-center">@package1.name</td>
+                                <td class="text-center">@package1.cost</td>
+                                <td class="text-center">@package1.description</td>
+                                <td class="text-center">@package1.duration</td>
+                               <td class="text-center">
+                                   <a data-toggle="modal" data-target="#basicModal" role="button" onclick="pkgDuration(@package1.duration, @package1.id)"><i class=" fa fa-plus fa-lg"></i></a>
+                               </td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.Paketi.updatePackageRender(package1.id)" role="button">
+                                        <i class=" fa fa-pencil fa-lg"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a data-role="delete-paket" data-delete-parent="tr" href="@routes.Paketi.deletePackage(package1.id)" role="button">
+                                        <i class=" fa fa-trash-o fa-lg"></i></a>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </section>
+
+            }else{
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cbx-heading text-center">
+                            <h3 class="uppercase wow fadeInUp">Trenutno nemate kreiranih paketa</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div><!-- cbx-latest-area -->
+
+            <div class="modal fade modal-reservation" id="basicModal" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content ">
+                        <form method="POST" action="@routes.Reservations.saveReservation(apartmentId)">
+                            <div class="modal-header">
+                                <button type="button" style="font-size: 30px;" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h2 class="modal-title" id="myModalLabel" style="text-align: center;">POTVRDITE REZERVACIJU</h2>
+                            </div>
+                            <div class="row">
+
+                                <div class="modal-body" id="">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6" id="">
+
+                                            <div id="datepicker">
+                                                <div class="col-md-12 check-in-date">
+                                                    <h4>Datum proslave: </h4>
+                                                </div>
+                                                <div class="col-md-6 padding-left-0">
+                                                    <div id="sandbox">
+                                                        <input type="text" class="date-check" name="checkIndate"  id="checkIn" />
+                                                    </div>
+                                                    <input id="apId" value="@apartmentId" hidden>
+                                                    <input id="paketId" name="paketId" hidden>
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="col-md-12 check-in-date">
+                                                    <h4>Zauzeti termini</h4>
+                                                    <p id="datumi" style="color: red; font-size: 15px"> </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 check-in-date">
+                                                <h4>Vrijeme</h4>
+                                            </div>
+                                            <div class="col-md-6 padding-left-0">
+                                                <h5>Od </h5>
+                                                <input type='number' class=" date-check" id='datetimepicker2' name="timeFrom" min="0" max="24" required/>
+                                            </div>
+
+                                            <div class="col-md-6 padding-left-0">
+                                                <h5>Do </h5>
+                                                <input type="number" class=" date-check" id="timeTo" name="timeTo" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="col-md-12 check-in-date">
+                                                <h4>Ime i Prezime:  </h4>
+                                            </div>
+                                            <div class="col-md-12 padding-left-0">
+                                                <input type="text" name="name"  class="date-check" id="name"  onchange="return checkName()" required>
+                                                <label id="name_error" class="error" for="name"></label>
+
+                                            </div>
+
+                                            <div class="col-md-12 check-in-date">
+                                                <h4>Kontakt telefon:  </h4>
+                                            </div>
+                                            <div class="col-md-12 padding-left-0">
+                                                <input type="text" name="phone" class="date-check" id="phone" placeholder="" onchange="numberLength()" required>
+                                                <label id="phone_error" class="error" for="phone"></label>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col-md-6" style="">
+                                        <p style="font-size: 10px;text-align: left">Nakon odabira datuma proslave, lista zauzetih termina će biti prikazana, molimo odaberite termin koji nije na listi. Hvala.</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="button" style="width:140px; font-size: 18px;" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                                        <button type="POST" style="width:140px; font-size: 18px;" class="btn btn-primary" href="@routes.Reservations.saveReservation(apartmentId)">Potvrdi</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            @if(paketi.size() < 3) {
+                <form method="GET" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Paketi.createPackageRender(apartmentId)" >
+                    <div class="col-md-12">
+                        <div class="col-md-4 col-md-offset-4 xs-text-center cbx-submit-area" id="">
+                            <button type="submit" class="btn btn-block lz-git-submit-btn cbx-submit" id="addApartment">
+                                DODAJ PAKET</button>
+                        </div>
+                    </div>
+                </form>
+            }else{
+                <h4 class="text-center">Dostigli ste maksimalni broj paketa, molimo Vas da obrišete jedan od kreiranih paketa kako bi mogli dodati novi. Hvala.</h4>
+            }
+        </div><!-- container end -->
+    </section>
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+    <script src='@routes.Assets.versioned("javascripts/deletePaketConfirm.js")'></script>
+    <script src='@routes.Assets.versioned("javascripts/validation.js")'></script>
+    <script src='@routes.Assets.versioned("javascripts/popup.js")'></script>
+
+    <script>
+        $('#sandbox input').datepicker({
+            startDate: new Date(),
+            todayBtn: "linked",
+            forceParse: false,
+            calendarWeeks: true,
+            todayHighlight: true,
+            autoclose: true
+        });
+    </script>
+}

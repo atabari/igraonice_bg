@@ -1,0 +1,91 @@
+@import helpers.ItemCategories
+@(item: Item)
+@main{
+  <section>
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="cbx-heading2 text-center">
+                      <h2 class="uppercase wow fadeInUp">AŽURIRAJ PROIZVOD</h2>
+                      <hr noshade size="" width="" color="">
+                      <p class=" wow flipInY">Molimo unesite sve informacije kako bi proizvod bio uspješno ažuriran</p>
+                  </div>
+              </div>
+          </div>
+
+              <!-- //ROW Our Team Header -->
+
+          <div class="row">
+              @if(flash.containsKey("error")) {
+                  <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Message:</span>
+                      @flash.get("error")
+                  </div>
+              }
+              <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="" >
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <div class="col-sm-10 col-sm-offset-1">
+                              <h4 class="edit-label">Naziv proizvoda</h4>
+                              <input type="text" name="name" class="form-control cbxname lz-git-form-control placeholder-style" id="apname" placeholder="Naziv Proizvoda" value="@item.name" required>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-sm-10 col-sm-offset-1">
+                              <h4 class="edit-label">Cijena proizvoda</h4>
+                              <input type="number" min="1" name="price" class="form-control cbxname lz-git-form-control placeholder-style" id="apprice" placeholder="Cijena" value="@item.price" required>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-sm-10 col-sm-offset-1">
+                              <h4 class="edit-label">Veličina</h4>
+                              <input type="text" name="size" class="form-control cbxname lz-git-form-control placeholder-style" id="size" placeholder="Veličina" value="@item.size" required>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-sm-10 col-sm-offset-1">
+                              <select name="itemCategory"  class="form-control cbxname lz-git-form-control placeholder-style" id="ddlocation">
+                                  @if(item.category == 1 ) {
+                                      <option  value="@ItemCategories.DJECACI" selected >Dječaci</option>
+                                  }
+                                  @if(item.category == 2 ) {
+                                      <option   value="@ItemCategories.DJEVOJCICE" selected >Djevojčice </option>
+                                  }
+                                  @if(item.category == 3 ) {
+                                      <option  value="@ItemCategories.OSTALO" selected >Ostalo </option>
+                                  }
+
+                                  <option value="@ItemCategories.DJECACI">Dječaci</option>
+                                  <option value="@ItemCategories.DJEVOJCICE">Djevojčice</option>
+                                  <option value="@ItemCategories.OSTALO">Ostalo</option>
+
+                              </select>
+                              <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <div class="col-sm-10 col-sm-offset-1">
+                              <h4 class="edit-label">Opis</h4>
+                              <textarea name="description" id="textarea_2" class="form-control cbxmessage lz-git-form-control placeholder-style" name="cbxmessage" id="cbxmessage" rows="10" placeholder="Opis proizvoda" required>@item.description</textarea>
+                          </div>
+                      </div>
+                  </div>
+
+
+
+                  <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                      <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Ažuriraj</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+  </section>
+
+
+}
+

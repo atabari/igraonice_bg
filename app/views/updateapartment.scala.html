@@ -1,0 +1,137 @@
+@(apartment: Apartment)(userId: Integer)
+@main {
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Igraonice" href="@routes.AppUsers.userApartmentsRender(userId)">Igraonice</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Uredi Igraonicu @apartment.name</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="cbx-heading2 text-center">
+                        <h2 class="uppercase wow fadeInUp">Uredi Igraonicu</h2>
+                        <hr noshade size="" width="" color="">
+                        <p class=" wow flipInY">Molimo unesite sve informacije kako bi igraonica bila uspješno ažurirana</p>
+                    </div>
+                </div>
+            </div><!-- //ROW Our Team Header -->
+
+            <div class="row">
+                @if(flash.containsKey("error")) {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Message:</span>
+                        @flash.get("error")
+                    </div>
+                }
+                <form method="post" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Apartments.updateApartment(apartment.id)" >
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Naziv igraonice</h4>
+                                <input type="text" name="name" class="form-control cbxname lz-git-form-control" id="apname" value="@apartment.name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Grad</h4>
+                                <select name="location"  class="form-control cbxname lz-git-form-control placeholder-style" id="ddlocation">
+                                    <option selected>@apartment.location</option>
+                                    <option>Sarajevo</option>
+                                    <option>Mostar</option>
+                                    <option>Banja Luka</option>
+                                    <option>Zenica</option>
+                                    <option>Tuzla</option>
+                                    <option>Brčko</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Adresa</h4>
+                                <input type="text" name="address" class="form-control cbxname lz-git-form-control" id="apstreet" value="@apartment.address" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Cijena</h4>
+                                <input type="number" min="1" name="price" class="form-control cbxname lz-git-form-control" id="apprice" value="@apartment.price">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Broj osoba (kapacitet)</h4>
+                                <input type="number" min="1" name="capacity" class="form-control cbxname lz-git-form-control" id="appersons" value="@apartment.capacity" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Radno vrijeme</h4>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-1">
+                                <input type="number" min="1" max="24" name="timeFrom" class="form-control cbxname lz-git-form-control" id="from" value="@apartment.timeFrom" required>
+                            </div>
+                            <div class="col-sm-5 ">
+                                <input type="number" min="1" max="24" name="timeTo" class="form-control cbxname lz-git-form-control" id="to" value="@apartment.timeTo" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Opis igraonice (kratki tekst o igraonici)</h4>
+                                <textarea name="description" id="textarea_2" class="form-control cbxmessage lz-git-form-control" rows="16" required>@apartment.description</textarea>
+                                <label id="cbxmessage-error" class="error valid" for="cbxmessage"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div id="map" class="map2"></div>
+                            </div>
+                            <input id="lat" name="lat" value="@apartment.lat"  style="display : none">
+                            <input id="lng" name="lng" value="@apartment.lng"  style="display : none">
+                        </div>
+
+                        <div id="infoPanel" style="display : none">
+                            <b>Marker status:</b>
+                            <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                            <b>Current position:</b>
+                            <div id="info"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area">
+                        <button type="submit" name="update" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Ažuriraj</button>
+                    </div>
+                </form>
+
+                <form method="get" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Images.imagesUploadRender(apartment.id)" >
+                    <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area">
+                        <button type="submit"  class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Dodaj slike</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </section>
+    <script  src='@routes.Assets.versioned("javascripts/googlemap.js")'></script>
+    <script  src='@routes.Assets.versioned("javascripts/showhidetownships.js")'></script>
+
+
+}

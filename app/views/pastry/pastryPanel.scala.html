@@ -1,0 +1,53 @@
+@(pastries: java.util.List[Pastry])
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Slastičarne</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Slastičarne</h2>
+                    </div>
+                </div>
+            </div><!-- //ROW Our Team Header -->
+            <div class="clearfix" style="margin-bottom: 5px"> </div>
+            <div class="cbx-latest-area">
+            @if(pastries.size() > 0) {
+                @for(pastry <- pastries) {
+                    <div class="item active cbx-single-all">
+                        <div class="col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src='@Pastry.getFirstPastryImageSmall(pastry)' class="" alt="a" style="height: 253px">
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <a href="@routes.Pastries.pastry(pastry.id)" target="">
+                                            <div class=" col-md-12 text-center">
+                                                <h4 class="product-title-color"><strong>@pastry.name</strong></h4>
+                                                <h5 class="price-text-color"><i class="fa fa-map-marker" id="font-size20"></i> @pastry.location</h5>
+                                                <h5 class="price-text-color">@pastry.address</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--//Item-->
+                }
+            }
+            </div><!-- cbx-latest-area -->
+        </div><!-- container end -->
+    </section>
+
+}

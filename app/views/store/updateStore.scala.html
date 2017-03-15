@@ -1,0 +1,97 @@
+@(store: Store)
+@main{
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="cbx-heading2 text-center">
+                        <h2 class="uppercase wow fadeInUp">AŽURIRAJ PRODAVNICU</h2>
+                        <hr noshade size="" width="" color="">
+                        <p class=" wow flipInY">Molimo unesite sve informacije kako bi prodavnica bila uspješno ažurirana</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- //ROW Our Team Header -->
+
+            <div class="row">
+                @if(flash.containsKey("error")) {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Message:</span>
+                        @flash.get("error")
+                    </div>
+                }
+                <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="" >
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Naziv prodavnice</h4>
+                                <input type="text" name="name" class="form-control cbxname lz-git-form-control placeholder-style" id="storename" value="@store.name" placeholder="Naziv Prodavnice" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Grad</h4>
+                                <select name="location"  class="form-control cbxname lz-git-form-control placeholder-style" id="ddlocation">
+                                    <option selected> @store.location </option>
+                                    <option>Sarajevo</option>
+                                    <option>Mostar</option>
+                                    <option>Banja Luka</option>
+                                    <option>Zenica</option>
+                                    <option>Tuzla</option>
+                                    <option>Brčko</option>
+
+                                </select>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Adresa</h4>
+                                <input type="text" name="address" class="form-control cbxname lz-git-form-control placeholder-style" id="apstreet" value="@store.address" placeholder="Ulica" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Radno vrijeme</h4>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-1">
+                                <input type="text"  name="workingHours" class="form-control cbxname lz-git-form-control placeholder-style"  placeholder="npr. 08h - 16h" value="@store.workingHours" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div id="map" class="map2"></div>
+                            </div>
+                            <input id="lat" name="lat" value="@store.lat"  style="display : none">
+                            <input id="lng" name="lng" value="@store.lng"  style="display : none">
+                        </div>
+
+                        <div id="infoPanel" style="display : none">
+                            <b>Marker status:</b>
+                            <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                            <b>Current position:</b>
+                            <div id="info"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                        <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Ažuriraj</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+
+    <script  src='@routes.Assets.versioned("javascripts/googlemap.js")'></script>
+
+}
+

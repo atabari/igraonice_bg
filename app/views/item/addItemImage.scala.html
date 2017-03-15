@@ -1,0 +1,24 @@
+@(itemId: Integer)
+@main {
+    <div class="container">
+        <div class="row">
+            <div style="margin-top: 20%; margin-bottom: 20%">
+                <form method="POST" role="form" action="@routes.Images.imagesItemUpload(itemId)" enctype="multipart/form-data"  >
+
+                    <div col-md-6>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <input id="height" type="file" name="image" class="form-control" multiple accept="image/*"/>
+                            </div>
+                            <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                                <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Dodaj sliku</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+}

@@ -1,0 +1,160 @@
+@(pastry: Pastry)(currentUser: AppUser)(cakes: java.util.List [Cake])
+@main {
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Slastičarne" href="@routes.Pastries.pastryMainRender()">Slastičarne</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>slastičarna @pastry.name</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<section id="apartment-section">
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="duplicate-email">
+						@if(flash.containsKey("success")) {
+							<div class="alert alert-success" role="alert">
+								<i class="fa fa-check-square-o" style="font-size:30px"></i>
+								<span  aria-hidden="true" class="flash-font">@flash.get("success")</span>
+							</div>
+						}
+						</div>
+					</div>
+				</div><!-- //ROW Our Team Header -->
+			</div>
+		</section>
+
+		<section class="margin-bottom-20">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="product-view">
+							<div class="product-essential">
+								<div class="product-img-box">
+									<div class="product-image">
+									@if(pastry.images.size() > 0) {
+										<div class="large-image">
+											<img src='@pastry.images.get(0).getSize(500, 300)' alt="">
+										</div>
+									}else{
+										<div class="large-image">
+											<img src='@routes.Assets.versioned("images/product.png")' alt="">
+										</div>
+									}
+									</div>
+										<!-- end: more-images -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<section class="margin-bottom-20">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-4" style="margin-left: 10px" >
+									<div class="cbx-heading2 text-left">
+										<h2 class="uppercase">@pastry.name</h2>
+										<h6>Grad: @pastry.location</h6>
+										<h6>Adresa: @pastry.address</h6>
+										<h6>Radno vrijeme: @pastry.workingHours</h6>
+									</div>
+									<div class="cbx-about-text text-left xs-text-center mar-b-40">
+
+										<div id="map" class="map1"></div>
+
+										<input id="lat" name="lat" value="@pastry.lat" style="display : none">
+										<input id="lng" name="lng" value="@pastry.lng" style="display : none">
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+
+
+		</section>
+		@if(currentUser !=null && pastry.userId == currentUser.id){
+			<section>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 col-md-offset-4 margin-bottom-20">
+							<form method="GET" role="form" action="@routes.Pastries.updatePastry(pastry.id)">
+								<div class=" xs-text-center cbx-submit-area" id="cookies-button">
+									<button type="submit" name="cookies" class="btn btn-block lz-git-submit-btn cbx-submit" id="cookiesbutton"><i class="fa fa-pencil"> AŽURIRAJ </i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</section>
+		}
+
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="cbx-heading2 text-left">
+							<h2 class="uppercase">Torte</h2>
+						</div>
+					</div>
+					@if(cakes.size() > 0) {
+						@for(cake <- cakes){
+							<div class="item active cbx-single-all">
+								<div class="col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+									<div class="col-item">
+										<div class="photo">
+											<img src='@Cake.getFirstCakeImage(cake.id).getSize(276,253)' class="" alt="a" style="height: 253px">
+										</div>
+										<div class="info">
+											<div class="row">
+												<a href="#" onclick="cakeView(@cake.id)">
+													<div class=" col-md-12 text-center">
+														<h4 class="product-title-color"><strong>@cake.name</strong></h4>
+													</div>
+												</a>
+											</div>
+											<div class="separator clear-left">
+												<p>Cijena:  @cake.price KM</p>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div> <!--//Item-->
+						}
+					}
+
+				</div>
+			</div>
+		</section>
+
+		<div class="modal fade modal-reservation" id="basicModal" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		</div>
+	</section>
+
+	<script  src='@routes.Assets.versioned("javascripts/googlemap.js")'></script>
+	<link rel="stylesheet" media="screen" href='@routes.Assets.versioned("stylesheets/etalage.css")'>
+
+	<script>
+
+		function cakeView(cakeId) {
+		$.ajax({
+	        data:cakeId,
+	        type: "GET",
+	        url: "/torta_rezervacija/" + cakeId
+	    }).success(function(response) {
+            $("#basicModal").html(response);
+            $("#basicModal").modal('show');
+    });
+
+		}
+	</script>
+}

@@ -1,0 +1,55 @@
+@(reservations: java.util.List[ItemReservation])
+@main{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cbx-heading text-center">
+                    <h2 class="uppercase wow fadeInUp">Rezervacije</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <section id="tablemargins" class="col-md-12">
+                <table class="table table-responsive" id="sort">
+                    <thead>
+                        <tr class="about">
+                            <th>Ime kupca</th>
+                            <th class="text-center">Telefon</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Komentar</th>
+                            <th class="text-center">Datum</th>
+                            <th class="text-center">Prodavnica</th>
+                            <th class="text-center">Proizvod</th>
+                            <th class="text-center">Cijena</th>
+                            <th class="text-center">Obriši</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(reservation <- reservations) {
+                            <tr class="about" >
+                                <td>@reservation.customerName</td>
+                                <td>@reservation.customerPhone</td>
+                                <td>@reservation.customerEmail</td>
+                                <td>@reservation.comment</td>
+                                <td>@reservation.date</td>
+                                <td>@reservation.store.name, @reservation.store.address </td>
+                                <td>@reservation.item.name</td>
+                                <td>@reservation.item.price</td>
+                                <td class="text-center">
+                                    <a data-role="post" data-delete-parent="tr" href="@routes.CakeReservations.deleteCakeReservation(reservation.id)" role="button">
+                                        <i class=" fa fa-trash fa-lg"></i></a>
+                                </td>
+                            </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+    <script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+
+
+
+}

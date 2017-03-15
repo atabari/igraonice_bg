@@ -1,0 +1,71 @@
+@(stores: java.util.List [Store])(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Admin Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Admin Panel</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Prodavnice</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="cbx-heading text-center">
+                  <h2 class="uppercase wow fadeInUp">Prodavnice</h2>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <section id="tablemargins" class="col-md-12">
+              <table class="table table-responsive" id="sort">
+                  <thead>
+                      <tr class="about">
+                          <th>Naziv</th>
+                          <th>Grad</th>
+                          <th>Adresa</th>
+                          <th>Radno vrijeme</th>
+                          <th>Prikazati na početnoj stranici</th>
+                          <th>Obriši</th>
+
+                      </tr>
+                  </thead>
+                  <tbody>
+                  @for(store <- stores) {
+                      <tr class="about" >
+                          <td>@store.name</td>
+                          <td>@store.location</td>
+                          <td class="text-center">@store.address</td>
+                          <td class="text-center">@store.workingHours</td>
+                         
+                          <td class="text-center">
+                          @if(store.isVisible == null || store.isVisible == false) {
+                              <a href="@routes.Stores.showOnHomePage(store.id)" >
+                                  <button type="submit" class="btn btn-primary" id="middlebuttons">NE</button>
+                              </a>
+                          } else {
+                              <a href="@routes.Stores.showOnHomePage(store.id)" >
+                                  <button type="submit" class="btn btn-primary" id="middlebuttons">DA</button>
+
+                              </a>
+                          }
+                          </td>
+                          <td class="text-center">
+                              <a data-role="delete-store" href="@routes.Stores.deleteStore(store.id)" role="button">
+                                  <i class=" fa fa-trash-o fa-lg"></i></a>
+                          </td>
+
+                      </tr>
+                  }
+                  </tbody>
+              </table>
+          </section>
+      </div>
+  </div>
+}
+
+<script src='@routes.Assets.versioned("javascripts/sort.js")'></script>
+<script src='@routes.Assets.versioned("javascripts/deleteApartmentConfirm.js")'></script>

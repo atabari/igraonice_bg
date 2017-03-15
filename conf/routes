@@ -1,0 +1,162 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET           /                                              @controllers.Application.index()
+GET           /objekti                                       @controllers.Application.index2()
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file                                  @controllers.Assets.versioned(path="/public", file: Asset)
+
+
+GET           /igraonica/:apartmentId                        @controllers.Apartments.apartment(apartmentId: Integer)
+
+
+
+POST          /igraonica/:apartmentId                        @controllers.Apartments.cookies(apartmentId: Integer)
+
+
+
+GET           /sarajevo                                      @controllers.Apartments.sarajevoApartments()
+GET           /mostar                                        @controllers.Apartments.mostarApartments()
+GET           /banjaluka                                     @controllers.Apartments.banjalukaApartments()
+GET           /zenica                                        @controllers.Apartments.zenicaApartments()
+GET           /tuzla                                         @controllers.Apartments.tuzlaApartments()
+GET           /brcko                                         @controllers.Apartments.brckoApartments()
+
+
+
+#Login
+GET           /login                                         @controllers.Login.loginIndex()
+POST          /user                                          @controllers.Login.renderAdminPanel()
+
+#popup mail
+POST          /igraonica/rezervacija/:apartmentId            @controllers.Emails.sendMail(apartmentId: Integer)
+
+
+#admin
+GET           /adminpage                                     @controllers.Login.apartmentsList()
+GET           /adminsnd/:apartmentId                         @controllers.Apartments.deleteApartment(apartmentId: Integer)
+DELETE        /adminsnd/:apartmentId                         @controllers.Apartments.deleteApartment(apartmentId: Integer)
+GET           /dodajigraonicu/:userId                        @controllers.Apartments.renderApartment(userId: Integer)
+POST          /dodajigraonicu/:userId                        @controllers.Apartments.createApartment(userId: Integer)
+GET           /updateigraonice/:apartmentId                  @controllers.Apartments.renderUpdateApartment(apartmentId: Integer)
+POST          /updateigraonice/:apartmentId                  @controllers.Apartments.updateApartment(apartmentId: Integer)
+
+GET           /adminsnd/adminpanel/:email                    @controllers.Login.showAdminPanel(email: String)
+POST          /adminsnd/adminpanel/:email                    @controllers.Login.updateUser(email: String)
+
+GET           /listaprodavnica                               @controllers.Login.storeList()
+GET           /listaslasticarni                              @controllers.Login.pastryList()
+
+
+GET           /panel/:userId                                 @controllers.Login.renderPanelForAppropriateUser(userId: Integer)
+
+#AppUser
+
+GET           /admin/kreirajkorisnika                        @controllers.AppUsers.createUserRender()
+POST          /admin/kreirajkorisnika                        @controllers.AppUsers.createUser()
+GET           /admin/listakorisnika                          @controllers.AppUsers.listOfUsers()
+GET           /admin/:userId                                 @controllers.AppUsers.deleteUser(userId: Integer)
+DELETE        /admin/:userId                                 @controllers.AppUsers.deleteUser(userId: Integer)
+GET           /logout                                        @controllers.AppUsers.logout()
+
+#GET           /korisnickipanel/:email                        @controllers.AppUsers.userPanelRender(email: String)
+GET           /user/igraonice/:userId                        @controllers.AppUsers.userApartmentsRender(userId: Integer)
+GET           /igraonkice/:apartmentId                       @controllers.Apartments.showOnHomepage(apartmentId: Integer)
+
+
+#AJAX
+
+GET           /ajax/*date                                    @controllers.Reservations.listOfReservationTimes(date: String)
+
+#PACKAGE
+GET           /kreirajpaket/:apartmetnId                     @controllers.Paketi.createPackageRender(apartmetnId: Integer)
+GET           /listapaketa/:apartmentId                      @controllers.Paketi.listOfPackages(apartmentId: Integer)
+POST          /kreirajpaket/:apartmentId                     @controllers.Paketi.createPackage(apartmentId: Integer)
+GET           /updatepaket/:paketId                          @controllers.Paketi.updatePackageRender(paketId: Integer)
+POST          /updatepaket/:paketId                          @controllers.Paketi.updatePackage(paketId: Integer)
+GET           /obrisipaket/:paketId                          @controllers.Paketi.deletePackage(paketId: Integer)
+DELETE        /obrisipaket/:paketId                          @controllers.Paketi.deletePackage(paketId: Integer)
+
+#RESERVATION
+POST          /rezervacija/:apartmentId                      @controllers.Reservations.saveReservation(apartmentId: Integer)
+GET           /rezervacije/:apartmentId                      @controllers.Reservations.allReservations(apartmentId: Integer)
+GET           /rezervacija/:reservationId                    @controllers.Reservations.confirmReservation(reservationId: Integer)
+
+
+#IMAGES
+GET           /uploadslika/:apartmentId                      @controllers.Images.imagesUploadRender(apartmentId: Integer)
+POST          /uploadslika/:apartmentId                      @controllers.Images.imagesUpload(apartmentId: Integer)
+GET           /listaslika/:apartmentId                       @controllers.Images.listOfPicturesRender(apartmentId: Integer)
+GET           /brisanjeslike/:imageId                        @controllers.Images.deleteImage(imageId: String)
+DELETE        /brisanjeslike/:imageId                        @controllers.Images.deleteImage(imageId: String)
+
+#STORE
+GET           /listaprodavnica/:userId                       @controllers.Stores.listOfUserStores(userId: Integer)
+GET           /kreirajprodavnicu/:userId                     @controllers.Stores.createStoreRender(userId: Integer)
+POST          /kreirajprodavnicu/:userId                     @controllers.Stores.createStore(userId: Integer)
+GET           /updateprodavnice/:storeId                     @controllers.Stores.updateStoreRender(storeId: Integer)
+POST          /updateprodavnice/:storeId                     @controllers.Stores.updateStore(storeId: Integer)
+GET           /brisanjeprodavnice/:storeId                   @controllers.Stores.deleteStore(storeId: Integer)
+DELETE        /brisanjeprodavnice/:storeId                   @controllers.Stores.deleteStore(storeId: Integer)
+GET           /rezervacijezaprodavnicu/:storeId              @controllers.ItemReservations.storeReservationsRender(storeId: Integer)
+GET           /brisanjerezervacije/:itemreservationId        @controllers.ItemReservations.deleteItemReservation(itemreservationId: Integer)
+GET           /prikazatinapocetnoj/:pastryId                 @controllers.Stores.showOnHomePage(pastryId: Integer)
+
+#ITEMS
+GET           /proizvod/:itemId                              @controllers.Items.item(itemId: Integer)
+GET           /listaproizvoda/:storeId                       @controllers.Items.listOfStoreItems(storeId: Integer)
+GET           /kreirajproizvod/:storeId                      @controllers.Items.createItemRender(storeId: Integer)
+POST          /kreirajproizvod/:storeId                      @controllers.Items.createItem(storeId: Integer)
+GET           /updateproizvoda/:itemId                       @controllers.Items.updateItemRender(itemId: Integer)
+POST          /updateproizvoda/:itemId                       @controllers.Items.updateItem(itemId: Integer)
+GET           /brisanjeprioizvoda/:itemId                    @controllers.Items.deleteItem(itemId: Integer)
+DELETE        /brisanjeprioizvoda/:itemId                    @controllers.Items.deleteItem(itemId: Integer)
+
+GET           /poklonimain                                   @controllers.Items.itemsPanel()
+GET           /slkeproizvoda/:itemId                         @controllers.Items.listOfItemImages(itemId: Integer)
+GET           /dodajslikuzaproizvod/:itemId                  @controllers.Items.addItemImages(itemId: Integer)
+POST          /dodajslikuzaproizvod/:itemId                  @controllers.Images.imagesItemUpload(itemId: Integer)
+
+
+#CATEGORY ITEM VIEW
+GET           /pretragadjecaci                               @controllers.Items.findMaleItems()
+GET           /pretragadjevojcice                            @controllers.Items.findFemaleItems()
+GET           /pretragaostalo                                @controllers.Items.findOtherItems()
+
+#ITEM EMAIL AND RESERVATION
+POST          /rezervacijaproizvoda/:itemId                  @controllers.Emails.sendMailItem(itemId: Integer)
+
+#CAKE
+GET           /dodajtortu/:pastryId                          @controllers.Cakes.createCakeRender(pastryId: Integer)
+POST          /dodajtortu/:storeId                           @controllers.Cakes.createCake(storeId: Integer)
+GET           /listatorti/:storeId                           @controllers.Cakes.listOfStoreCakes(storeId: Integer)
+GET           /updatetorte/:cakeId                           @controllers.Cakes.updateCakeRender(cakeId: Integer)
+POST          /updatetorte/:cakeId                           @controllers.Cakes.updateCake(cakeId: Integer)
+GET           /brisanjetorte/:cakeId                         @controllers.Cakes.deleteCake(cakeId: Integer)
+DELETE        /brisanjetorte/:cakeId                         @controllers.Cakes.deleteCake(cakeId: Integer)
+GET           /dodajslikuzatortu/:cakeId                     @controllers.Cakes.addCakeImages(cakeId: Integer)
+POST          /dodajslikuzatortu/:cakeId                     @controllers.Images.imagesCakeUpload(cakeId: Integer)
+GET           /sliketorte/:cakeId                            @controllers.Cakes.listOfCakeImages(cakeId: Integer)
+GET           /torta_rezervacija/:cakeId                     @controllers.Cakes.cakeReservation(cakeId: Integer)
+
+#CAKE EMAIL AND RESERVATION
+POST          /rezervacijatorte/:cakeId                      @controllers.Emails.sendMailCake(cakeId: Integer)
+
+
+#PASTRY
+GET           /kreirajslasticarnu/:userId                    @controllers.Pastries.createPastryRender(userId: Integer)
+POST          /kreirajslasticarnu/:userId                    @controllers.Pastries.createPastry(userId: Integer)
+GET           /listaslaticarni/:userId                       @controllers.Pastries.listOfUserPastries(userId: Integer)
+GET           /updateslasticarne/:pastryId                   @controllers.Pastries.updatePastryRender(pastryId: Integer)
+POST          /updateslasticarne/:pastryId                   @controllers.Pastries.updatePastry(pastryId: Integer)
+GET           /brisanjelsasticarne/:pastryId                 @controllers.Pastries.deletePastry(pastryId: Integer)
+DELETE        /brisanjelsasticarne/:pastryId                 @controllers.Pastries.deletePastry(pastryId: Integer)
+GET           /prikazatislasticarnu/:pastryId                @controllers.Pastries.showPastryOnHomePage(pastryId: Integer)
+GET           /slasticarne                                   @controllers.Pastries.pastryMainRender()
+GET           /slastricarna/:pastryId                        @controllers.Pastries.pastry(pastryId: Integer)
+GET           /rezervacijezaslasticarnu/:pastryId            @controllers.CakeReservations.pastryReservationsRender(pastryId: Integer)
+GET           /brisanjerezervacijezasl/:reservationId        @controllers.CakeReservations.deleteCakeReservation(reservationId: Integer)
+DELETE        /brisanjerezervacijezasl/:reservationId        @controllers.CakeReservations.deleteCakeReservation(reservationId: Integer)

@@ -1,0 +1,133 @@
+@(userId: Integer)
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Korisnički Panel" href="@routes.Login.renderPanelForAppropriateUser(userId)">Korisnički Panel</a><span>&mdash;›</span></li>
+					<li class="home"> <a title="Igraonice" href="@routes.AppUsers.userApartmentsRender(userId)">Igraonice</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Dodaj Igraonicu</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="cbx-heading2 text-center">
+                        <h2 class="uppercase wow fadeInUp">DODAJ NOVU IGRAONICU</h2>
+                        <hr noshade size="" width="" color="">
+                        <p class=" wow flipInY">Molimo unesite sve informacije kako bi igraonica bila uspješno unesena u bazu</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- //ROW Our Team Header -->
+
+            <div class="row">
+                @if(flash.containsKey("error")) {
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Message:</span>
+                        @flash.get("error")
+                    </div>
+                }
+                <form method="POST" class="form-horizontal lz-contact-form cbx-contactform" role="form" action="@routes.Apartments.createApartment(userId)" >
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="text" name="name" class="form-control cbxname lz-git-form-control placeholder-style" id="apname" placeholder="Naziv Igraonice" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <select name="location"  class="form-control cbxname lz-git-form-control placeholder-style" id="ddlocation">
+                                   <option selected class="placeholder-style"> Odaberi grad</option>
+                                    <option>Sarajevo</option>
+                                    <option>Mostar</option>
+                                    <option>Banja Luka</option>
+                                    <option>Zenica</option>
+                                    <option>Tuzla</option>
+                                    <option>Brčko</option>
+
+                                </select>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="text" name="address" class="form-control cbxname lz-git-form-control placeholder-style" id="apstreet" placeholder="Ulica" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="number" min="1" name="price" class="form-control cbxname lz-git-form-control placeholder-style" id="apprice" placeholder="Cijena" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <input type="number" min="1" name="capacity" class="form-control cbxname lz-git-form-control placeholder-style" id="appersons" placeholder="Broj osoba (kapacitet igraonice)" required>
+                                <label id="cbxname-error" class="error valid" for="cbxname"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <h4 class="edit-label">Radno vrijeme</h4>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-1">
+                                <input type="number" min="1" max="24" name="timeFrom" class="form-control cbxname lz-git-form-control placeholder-style" id="from" placeholder="Od" min="1" max="24" required>
+                            </div>
+                            <div class="col-sm-5 ">
+                                <input type="number" min="1" max="24" name="timeTo" class="form-control cbxname lz-git-form-control placeholder-style" id="to" placeholder="Do" min="1" max="24" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <textarea name="description" id="textarea_2" class="form-control cbxmessage lz-git-form-control placeholder-style" name="cbxmessage" id="cbxmessage" rows="16" placeholder="Opis Igraonice (kratki tekst o igraonici)" required></textarea>
+                                <label id="cbxmessage-error" class="error valid" for="cbxmessage"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div id="map" class="map2"></div>
+                            </div>
+                            <input id="lat" name="lat" value="43.8534183"  style="display : none">
+                            <input id="lng" name="lng" value="18.37808399999"  style="display : none">
+                        </div>
+
+                        <div id="infoPanel" style="display : none">
+                            <b>Marker status:</b>
+                            <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                            <b>Current position:</b>
+                            <div id="info"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-md-offset-3 xs-text-center cbx-submit-area" id="login-button-padding">
+                        <button type="submit" name="save" class="btn btn-block lz-git-submit-btn cbx-submit" id="apcreatebutton">Dodaj</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+
+    <script  src='@routes.Assets.versioned("javascripts/googlemap.js")'></script>
+    <script  src='@routes.Assets.versioned("javascripts/showhidetownships.js")'></script>
+
+}
+

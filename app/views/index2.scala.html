@@ -1,0 +1,86 @@
+@(apartments: java.util.List[Apartment])
+@main{
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<ul>
+					<li class="home"> <a title="Početna" href="@routes.Application.index()">Početna</a><span>&mdash;›</span></li>
+					<li class="category13"><strong>Igraonice</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <section>
+        <div class="container">
+            <div class="row" id="margin-top-10">
+                <div class="col-md-2">
+                    <a href="@routes.Apartments.sarajevoApartments()">Sarajevo </a>
+                </div>
+
+                <div class="col-md-2">
+                    <a href="@routes.Apartments.mostarApartments()">Mostar</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@routes.Apartments.banjalukaApartments()">Banja Luka</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@routes.Apartments.zenicaApartments()">Zenica</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@routes.Apartments.tuzlaApartments()">Tuzla</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="@routes.Apartments.brckoApartments()">Brčko</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cbx-heading text-center">
+                        <h2 class="uppercase wow fadeInUp">Igraonice za proslavu rođendana</h2>
+                    </div>
+                </div>
+            </div><!-- //ROW Our Team Header -->
+            <div class="clearfix" style="margin-bottom: 5px"> </div>
+            <div class="cbx-latest-area">
+            @if(apartments.size() > 0) {
+                @for(apartment <- apartments) {
+                    <div class="item active cbx-single-all">
+                        <div class="col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src='@Apartment.getFirstImageSmall(apartment)' class="" alt="a" style="height: 253px">
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <a href="@routes.Apartments.apartment(apartment.id)" target="">
+                                            <div class=" col-md-12 text-center">
+                                                <h4 class="product-title-color"><strong>@apartment.name</strong></h4>
+                                                <h5 class="price-text-color"><i class="fa fa-map-marker" id="font-size20"></i> @apartment.location</h5>
+                                                <h5 class="price-text-color">@apartment.address</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="">
+                                            <i class="fa fa-male"></i> @apartment.capacity Osoba</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--//Item-->
+                }
+            }else {
+	            <div style="margin-top: 150px; margin-bottom: 150px; text-align: center">
+		            <h3>U ponudi trenutno nemamo objekata iz ovog grada</h3>
+	            </div>
+            }
+            </div><!-- cbx-latest-area -->
+        </div><!-- container end -->
+    </section>
+
+}
